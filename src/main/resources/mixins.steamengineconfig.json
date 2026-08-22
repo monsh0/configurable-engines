@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "monsh.steamengineconfig.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "steamengineconfig.refmap.json",
+  "mixins": [
+    "BoilerDataMixin",
+    "BoilerHeatersMixin",
+    "PoweredShaftBlockEntityMixin",
+    "DieselEngineBlockEntityMixin",
+    "ModularDieselEngineBlockEntityMixin",
+    "HugeDieselEngineBlockEntityMixin",
+    "PoweredEngineShaftBlockEntityMixin",
+    "TurbochargerUpgradeMixin",
+    "BurnerBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
