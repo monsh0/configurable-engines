@@ -23,7 +23,7 @@ public class PoweredShaftBlockEntityMixin {
         cir.setReturnValue(cir.getReturnValueF() * rpm / 64f);
     }
 
-    @ModifyReturnValue(method = "calculateAddedStressCapacity")
+    @ModifyReturnValue(method = "calculateAddedStressCapacity", at = @At("RETURN"))
     private float steamengineconfig$stress(float original) {
         float rpm = Config.INSTANCE.engineRPM.get();
         if (rpm == 0f) return 0f;
