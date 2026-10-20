@@ -10,7 +10,6 @@
     "PoweredShaftBlockEntityMixin",
     "DieselEngineBlockEntityMixin",
     "ModularDieselEngineBlockEntityMixin",
-    "HugeDieselEngineBlockEntityMixin",
     "PoweredEngineShaftBlockEntityMixin",
     "TurbochargerUpgradeMixin",
     "BurnerBlockEntityMixin"
