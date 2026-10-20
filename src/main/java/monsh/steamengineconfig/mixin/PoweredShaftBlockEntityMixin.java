@@ -13,21 +13,19 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = PoweredShaftBlockEntity.class, remap = false)
-public abstract class PoweredShaftBlockEntityMixin extends GeneratingKineticBlockEntity {
-
-    public PoweredShaftBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
-    }
+public class PoweredShaftBlockEntityMixin {
 
     @Inject(method = "getGeneratedSpeed", at = @At("RETURN"), cancellable = true)
     private void steamengineconfig$getGeneratedSpeed(CallbackInfoReturnable<Float> cir) {
-        float baseSpeed = cir.getReturnValueF();
-        float newSpeed = baseSpeed * Config.INSTANCE.engineRPM.get() / 64f;
-        cir.setReturnValue(newSpeed);
+        float rpm = Config.INSTANCE.engineRPM.get();
+        if (rpm == 0f) { cir.setReturnValue(0f); return; }
+        cir.setReturnValue(cir.getReturnValueF() * rpm / 64f);
     }
 
-    @ModifyVariable(method = "calculateAddedStressCapacity", at = @At("STORE"), ordinal = 0)
-    private float steamengineconfig$calculateAddedStressCapacity(float original) {
-        return original * 64f / Config.INSTANCE.engineRPM.get() * Config.INSTANCE.levelsPerEngine.get().floatValue();
+    @ModifyReturnValue(method = "calculateAddedStressCapacity")
+    private float steamengineconfig$stress(float original) {
+        float rpm = Config.INSTANCE.engineRPM.get();
+        if (rpm == 0f) return 0f;
+        return original * 64f / rpm * Config.INSTANCE.levelsPerEngine.get().floatValue();
     }
 }
